@@ -7,7 +7,6 @@
 6. check if enters hoop area
 7. output whether score or miss'''
 
-import math
 
 # set ball start
 ball_x = 0
@@ -32,6 +31,7 @@ for step in range(15):  # one step = one position update
         break
 
     ball_x = ball_x + x_chg
+    ball_y = ball_y + y_chg
 
     # the ball starts falling
     if step > 4: # arbitrary
