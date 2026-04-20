@@ -45,6 +45,8 @@ for step in range(15):  # one step = one position update
 
     # gravity pulls ball down
     y_chg = y_chg - gravity
+    if ball_y < 0:
+        break
 
 if scored == False:
     print("Miss!")
