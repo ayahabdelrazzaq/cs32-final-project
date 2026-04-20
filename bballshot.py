@@ -60,6 +60,7 @@ scored = False
 for step in range(15):  # one step = one position update
     trajectory.append((ball_x, ball_y))
 
+
     if abs(ball_x - hoop_x) <= 1 and abs(ball_y - hoop_y) <=1:
         print("Score")
         scored = True
