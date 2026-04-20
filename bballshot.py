@@ -33,6 +33,19 @@ while True:
 
     move = input("Enter choice: ")
 
+    if move == "a":
+        angle == angle + 5
+    elif move == "d":
+        angle == angle - 5
+    elif move == "p":
+        power == power + 1
+    elif move == "w":
+        power == power - 1
+    elif move == "shoot":
+        break
+    else:
+        print("Invalid choice, please type only the letter or phrase intended")
+
 angle_rad = math.radians(angle)
 
 # convert angle + power to movement, from chatgpt
