@@ -7,6 +7,7 @@
 6. check if enters hoop area
 7. output whether score or miss'''
 
+import math
 
 # set ball start
 ball_x = 0
@@ -15,12 +16,20 @@ ball_y = 0
 hoop_x = 20
 hoop_y = 10
 
+# user input
+angle = float(input("Enter shot angle in degrees: "))   # bc who knows radians like that
+power = float(input("Enter shot power"))
+
+angle_rad = math.radians(angle)
+
+# convert angle + power to movement, from chatgpt
+x_chg = power * math.cos(angle_rad)
+y_chg = power * math.sin(angle_rad)
+
+gravity = 1
+
 trajectory = []
 scored = False
-
-# ball movement
-y_chg = 3
-x_chg = 2
 
 for step in range(15):  # one step = one position update
     trajectory.append((ball_x, ball_y))
@@ -30,12 +39,12 @@ for step in range(15):  # one step = one position update
         scored = True
         break
 
+    # update ball pos
     ball_x = ball_x + x_chg
     ball_y = ball_y + y_chg
 
-    # the ball starts falling
-    if step > 4: # arbitrary
-        y_chg = y_chg -1
+    # gravity pulls ball down
+    y_chg = y_chg - gravity
 
 if scored == False:
     print("Miss!")
