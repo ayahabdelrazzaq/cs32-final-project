@@ -23,7 +23,9 @@ power = 5
 print("Set up your shot!")
 print("Type 'a' to increase your angle")
 print("Type 'd' to decrease your angle")
-print(")
+print("Type 'p' to strengthen your power")
+print("Type 'w' to weaken your power")
+print("Type 'shoot' when ready")
 
 angle_rad = math.radians(angle)
 
