@@ -28,8 +28,10 @@ print("Type 'w' to weaken your power")
 print("Type 'shoot' when ready")
 
 while True:
-    print("Current angle:", angle)
+    print("Angle measured:", angle)
     print("Power enabled:", power)
+
+    move = input("Enter choice: ")
 
 angle_rad = math.radians(angle)
 
