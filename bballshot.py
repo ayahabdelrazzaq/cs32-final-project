@@ -26,7 +26,7 @@ angle_rad = math.radians(angle)
 x_chg = power * math.cos(angle_rad)
 y_chg = power * math.sin(angle_rad)
 
-gravity = 1
+gravity = 1 # arbitary, made a variable so its easier to change
 
 trajectory = []
 scored = False
