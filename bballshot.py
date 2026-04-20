@@ -27,6 +27,10 @@ print("Type 'p' to strengthen your power")
 print("Type 'w' to weaken your power")
 print("Type 'shoot' when ready")
 
+while True:
+    print("Current angle:", angle)
+    print("Power enabled:", power)
+
 angle_rad = math.radians(angle)
 
 # convert angle + power to movement, from chatgpt
