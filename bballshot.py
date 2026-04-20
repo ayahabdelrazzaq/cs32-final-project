@@ -34,13 +34,13 @@ while True:
     move = input("Enter choice: ")
 
     if move == "a":
-        angle == angle + 5     # = assigns new value, == checks equality
+        angle = angle + 5     # = assigns new value, == checks equality
     elif move == "d":
-        angle == angle - 5
+        angle = angle - 5
     elif move == "p":
-        power == power + 1
+        power = power + 1
     elif move == "w":
-        power == power - 1
+        power = power - 1
     elif move == "shoot":
         break
     else:
@@ -60,7 +60,7 @@ scored = False
 for step in range(15):  # one step = one position update
     trajectory.append((ball_x, ball_y))
 
-    # debug + visuals later?
+    # debug + visuals later? looks MESSY
     print("Step:", step)
     print("Ball position:", ball_x, ball_y)
     print("Current changes:", x_chg, y_chg)
