@@ -21,7 +21,9 @@ angle = 45
 power = 5
 
 print("Set up your shot!")
-print("Type ')
+print("Type 'a' to increase your angle")
+print("Type 'd' to decrease your angle")
+print(")
 
 angle_rad = math.radians(angle)
 
