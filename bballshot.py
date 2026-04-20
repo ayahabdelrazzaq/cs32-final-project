@@ -34,7 +34,7 @@ while True:
     move = input("Enter choice: ")
 
     if move == "a":
-        angle == angle + 5
+        angle == angle + 5     # = assigns new value, == checks equality
     elif move == "d":
         angle == angle - 5
     elif move == "p":
