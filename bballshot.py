@@ -60,6 +60,10 @@ scored = False
 for step in range(15):  # one step = one position update
     trajectory.append((ball_x, ball_y))
 
+    # debug + visuals later?
+    print("Step:", step)
+    print("Ball position:", ball_x, ball_y)
+    print("Current changes:", x_chg, y_chg)
 
     if abs(ball_x - hoop_x) <= 1 and abs(ball_y - hoop_y) <=1:
         print("Score")
