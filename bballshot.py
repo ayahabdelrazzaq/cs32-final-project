@@ -16,9 +16,11 @@ ball_y = 0
 hoop_x = 20
 hoop_y = 10
 
-# user input
-angle = float(input("Enter shot angle in degrees: "))   # bc who knows radians like that
-power = float(input("Enter shot power"))
+# initial shot settings
+angle = 45
+power = 5
+
+print(")
 
 angle_rad = math.radians(angle)
 
