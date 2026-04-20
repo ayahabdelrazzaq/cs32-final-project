@@ -28,8 +28,8 @@ print("Type 'w' to weaken your power")
 print("Type 'shoot' when ready")
 
 while True:
-    print("Angle measured:", angle)
-    print("Power enabled:", power)
+    print("Calculated angle:", angle)
+    print("Power accumulated:", power)
 
     move = input("Enter choice: ")
 
