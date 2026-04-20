@@ -20,7 +20,8 @@ hoop_y = 10
 angle = 45
 power = 5
 
-print(")
+print("Set up your shot!")
+print("Type ')
 
 angle_rad = math.radians(angle)
 
