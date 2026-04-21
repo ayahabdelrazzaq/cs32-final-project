@@ -48,7 +48,7 @@ while True:
 
 angle_rad = math.radians(angle)
 
-# convert angle + power to movement, from chatgpt
+# convert angle + power to movement
 x_chg = power * math.cos(angle_rad)
 y_chg = power * math.sin(angle_rad)
 
