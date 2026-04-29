@@ -85,5 +85,5 @@ if scored == False:
 print(trajectory)
 
 
-
+# no way to exit
 
