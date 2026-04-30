@@ -86,4 +86,5 @@ print(trajectory)
 
 
 # no way to exit
+#want to also welcome them to the game
 
