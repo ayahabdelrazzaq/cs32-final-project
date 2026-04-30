@@ -99,3 +99,6 @@ for point in trajectory:
     x_vals.append(point[0])
     y_vals.append(point[1])
 
+# Make a graph, used chatGPT
+fig, ax = plt.subplots()
+
