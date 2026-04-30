@@ -13,7 +13,7 @@ import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-print("Welcome to Utimate Basketball Practice!")
+print("Welcome to Hoop House!")
 
 # set ball start
 ball_x = 0
