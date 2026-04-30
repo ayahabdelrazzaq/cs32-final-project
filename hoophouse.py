@@ -135,13 +135,13 @@ ax.set_xlim(-1, max(x_vals) + 5)
 ax.set_ylim(-1, max(max(y_vals), hoop_y) + 5)
 
 # draw start point
-ax.plot(x_vals[0], y_vals[0], marker='o', color='orange', label="Start")
+ax.plot(x_vals[0], y_vals[0], marker='o', color='pink', label="Start")
 
 # draw hoop
 draw_hoop(ax)
 
 # create moving ball and trail
-ball_plot, = ax.plot([], [], marker='o', color='red', markersize=12, label="Ball")
+ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
 trail_plot, = ax.plot([], [], color='blue', linewidth=2, label="Ball trajectory")
 
 ax.legend()
