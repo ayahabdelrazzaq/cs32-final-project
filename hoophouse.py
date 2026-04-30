@@ -142,7 +142,7 @@ draw_hoop(ax)
 
 # create moving ball and trail
 ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
-trail_plot, = ax.plot([], [], color='blue', linewidth=2, label="Ball trajectory")
+trail_plot, = ax.plot([], [], color='purple', linewidth=2, label="Ball trajectory")
 
 ax.legend()
 
