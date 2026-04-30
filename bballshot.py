@@ -102,3 +102,25 @@ for point in trajectory:
 # Make a graph, used chatGPT
 fig, ax = plt.subplots()
 
+ax.plot(x_vals, y_vals, marker='o', label="Ball trajectory")
+ax.plot(x_vals[0], y_vals[0], marker='o', label="Start")
+ax.plot(hoop_x, hoop_y, marker='x', label="Hoop center")
+
+# simple hoop outline, used chatGPT
+hoop = patches.Rectangle((hoop_x - 1, hoop_y - 0.2), 2, 0.4, fill=False)
+ax.add_patch(hoop)
+
+# add labels and title
+ax.set_title("Basketball Shot Trajectory")
+ax.set_xlabel("x-position")
+ax.set_ylabel("y-position")
+
+ax.axhline(y=0)
+
+# make graph easier to read
+ax.set_xlim(-1, max(x_vals) + 5)
+ax.set_ylim(-1, max(y_vals) + 5)
+
+ax.legend()
+plt.show()
+
