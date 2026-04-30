@@ -11,6 +11,7 @@ import math
 
 # graphic/plotting, from chatGPT
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 print("Welcome to Hoop House!")
 
@@ -31,6 +32,7 @@ print("Type 'd' to decrease your angle")
 print("Type 'p' to strengthen your power")
 print("Type 'w' to weaken your power")
 print("Type 'shoot' when ready")
+print("Type 'quit' to exit the game")
 
 while True:
     print("Calculated angle:", angle)
@@ -49,6 +51,9 @@ while True:
             power = power - 1
     elif move == "shoot":
         break
+    elif move == "quit":
+        print("Thanks for playing Hoop House!")
+        exit()
     else:
         print("Invalid choice, please type only the letter or phrase intended")
 
@@ -72,7 +77,7 @@ for step in range(15):  # one step = one position update
     print("Current changes:", x_chg, y_chg)
 
     if abs(ball_x - hoop_x) <= 1 and abs(ball_y - hoop_y) <=1:
-        print("Score")
+        print("Score!!!")
         scored = True
         break
 
@@ -99,40 +104,61 @@ for point in trajectory:
     x_vals.append(point[0])
     y_vals.append(point[1])
 
-# Make a graph, used chatGPT
+
+# helper function to draw hoop
+def draw_hoop(ax):
+    # backboard
+    ax.plot([hoop_x + 1, hoop_x + 1], [hoop_y - 1.5, hoop_y + 1.5], linewidth=3)
+
+    # rim
+    ax.plot([hoop_x - 1, hoop_x + 1], [hoop_y, hoop_y], linewidth=3)
+
+    # net
+    ax.plot([hoop_x - 1, hoop_x - 0.6], [hoop_y, hoop_y - 1], linewidth=1)
+    ax.plot([hoop_x - 0.5, hoop_x - 0.2], [hoop_y, hoop_y - 1], linewidth=1)
+    ax.plot([hoop_x, hoop_x], [hoop_y, hoop_y - 1], linewidth=1)
+    ax.plot([hoop_x + 0.5, hoop_x + 0.2], [hoop_y, hoop_y - 1], linewidth=1)
+    ax.plot([hoop_x + 1, hoop_x + 0.6], [hoop_y, hoop_y - 1], linewidth=1)
+    ax.plot([hoop_x - 0.6, hoop_x + 0.6], [hoop_y - 1, hoop_y - 1], linewidth=1)
+
+
+# FIRST: animation figure
 fig, ax = plt.subplots()
 
-ax.plot(x_vals, y_vals, marker='o', label="Ball trajectory")
-ax.plot(x_vals[0], y_vals[0], marker='o', label="Start")
-# ax.plot(hoop_x, hoop_y, marker='x', label="Hoop center")
-
-# simple hoop outline, used chatGPT
-# draw backboard
-ax.plot([hoop_x + 1, hoop_x + 1], [hoop_y - 1.5, hoop_y + 1.5], linewidth=3)
-
-# draw rim
-ax.plot([hoop_x - 1, hoop_x + 1], [hoop_y, hoop_y], linewidth=3)
-
-# draw net
-ax.plot([hoop_x - 1, hoop_x - 0.6], [hoop_y, hoop_y - 1], linewidth=1)
-ax.plot([hoop_x - 0.5, hoop_x - 0.2], [hoop_y, hoop_y - 1], linewidth=1)
-ax.plot([hoop_x, hoop_x], [hoop_y, hoop_y - 1], linewidth=1)
-ax.plot([hoop_x + 0.5, hoop_x + 0.2], [hoop_y, hoop_y - 1], linewidth=1)
-ax.plot([hoop_x + 1, hoop_x + 0.6], [hoop_y, hoop_y - 1], linewidth=1)
-
-ax.plot([hoop_x - 0.6, hoop_x + 0.6], [hoop_y - 1, hoop_y - 1], linewidth=1)
-
-# add labels and title
-ax.set_title("Basketball Shot Trajectory")
+ax.set_title("Basketball Shot Animation")
 ax.set_xlabel("x-position")
 ax.set_ylabel("y-position")
 
 ax.axhline(y=0)
 
-# make graph easier to read
 ax.set_xlim(-1, max(x_vals) + 5)
-ax.set_ylim(-1, max(y_vals) + 5)
+ax.set_ylim(-1, max(max(y_vals), hoop_y) + 5)
+
+# draw start point
+ax.plot(x_vals[0], y_vals[0], marker='o', color='orange', label="Start")
+
+# draw hoop
+draw_hoop(ax)
+
+# create moving ball and trail
+ball_plot, = ax.plot([], [], marker='o', color='red', markersize=12, label="Ball")
+trail_plot, = ax.plot([], [], color='blue', linewidth=2, label="Ball trajectory")
 
 ax.legend()
-plt.show()
 
+# update function for animation
+def update(frame):
+    ball_plot.set_data([x_vals[frame]], [y_vals[frame]])
+    trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1])
+    return ball_plot, trail_plot
+
+ani = animation.FuncAnimation(
+    fig,
+    update,
+    frames=len(x_vals),
+    interval=800,
+    repeat=False,
+    blit=False
+)
+
+plt.show()
