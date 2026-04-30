@@ -11,7 +11,6 @@ import math
 
 # graphic/plotting, from chatGPT
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 
 print("Welcome to Hoop House!")
 
@@ -105,11 +104,23 @@ fig, ax = plt.subplots()
 
 ax.plot(x_vals, y_vals, marker='o', label="Ball trajectory")
 ax.plot(x_vals[0], y_vals[0], marker='o', label="Start")
-ax.plot(hoop_x, hoop_y, marker='x', label="Hoop center")
+# ax.plot(hoop_x, hoop_y, marker='x', label="Hoop center")
 
 # simple hoop outline, used chatGPT
-hoop = patches.Rectangle((hoop_x - 1, hoop_y - 0.2), 2, 0.4, fill=False)
-ax.add_patch(hoop)
+# draw backboard
+ax.plot([hoop_x + 1, hoop_x + 1], [hoop_y - 1.5, hoop_y + 1.5], linewidth=3)
+
+# draw rim
+ax.plot([hoop_x - 1, hoop_x + 1], [hoop_y, hoop_y], linewidth=3)
+
+# draw net
+ax.plot([hoop_x - 1, hoop_x - 0.6], [hoop_y, hoop_y - 1], linewidth=1)
+ax.plot([hoop_x - 0.5, hoop_x - 0.2], [hoop_y, hoop_y - 1], linewidth=1)
+ax.plot([hoop_x, hoop_x], [hoop_y, hoop_y - 1], linewidth=1)
+ax.plot([hoop_x + 0.5, hoop_x + 0.2], [hoop_y, hoop_y - 1], linewidth=1)
+ax.plot([hoop_x + 1, hoop_x + 0.6], [hoop_y, hoop_y - 1], linewidth=1)
+
+ax.plot([hoop_x - 0.6, hoop_x + 0.6], [hoop_y - 1, hoop_y - 1], linewidth=1)
 
 # add labels and title
 ax.set_title("Basketball Shot Trajectory")
