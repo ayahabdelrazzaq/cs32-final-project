@@ -9,6 +9,12 @@
 
 import math
 
+# graphic/plotting, from chatGPT
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+print("Welcome to Utimate Basketball Practice!")
+
 # set ball start
 ball_x = 0
 ball_y = 0
