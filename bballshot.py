@@ -46,7 +46,8 @@ while True:
     elif move == "p":
         power = power + 1
     elif move == "w":
-        power = power - 1
+        if power > 1:   # prevent negative power
+            power = power - 1
     elif move == "shoot":
         break
     else:
