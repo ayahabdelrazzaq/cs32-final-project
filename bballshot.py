@@ -91,6 +91,11 @@ if scored == False:
 print(trajectory)
 
 
-# no way to exit
-#want to also welcome them to the game
+# Visualizing shot
+x_vals = []
+y_vals = []
+
+for point in trajectory:
+    x_vals.append(point[0])
+    y_vals.append(point[1])
 
