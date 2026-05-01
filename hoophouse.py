@@ -26,6 +26,7 @@ hoop_y = 10
 angle = 45
 power = 5
 
+
 print("Set up your shot!")
 print("Type 'a' to increase your angle")
 print("Type 'd' to decrease your angle")
@@ -56,6 +57,17 @@ while True:
         exit()
     else:
         print("Invalid choice, please type only the letter or phrase intended")
+        
+print("Choose a power-up: none, accuracy, or curve")
+power_up = input("Power-up: ")
+
+if power_up == "curve":
+    target_angle = 50
+
+    if angle < target_angle:
+        angle = angle + 5
+    elif angle > target_angle:
+        angle = angle - 5
 
 angle_rad = math.radians(angle)
 
@@ -63,12 +75,13 @@ angle_rad = math.radians(angle)
 x_chg = power * math.cos(angle_rad)
 y_chg = power * math.sin(angle_rad)
 
-gravity = 1 # arbitary, made a variable so its easier to change
+gravity = 0.5 
+time_step = 0.5
 
 trajectory = []
 scored = False
 
-for step in range(15):  # one step = one position update
+for step in range(30):  # one step = one position update
     trajectory.append((ball_x, ball_y))
 
     # debug + visuals later? looks MESSY
@@ -76,17 +89,20 @@ for step in range(15):  # one step = one position update
     print("Ball position:", ball_x, ball_y)
     print("Current changes:", x_chg, y_chg)
 
-    if abs(ball_x - hoop_x) <= 1 and abs(ball_y - hoop_y) <=1:
+    hoop_tolerance = 1
+    if power_up == "accuracy":
+        hoop_tolerance = 2
+    if abs(ball_x - hoop_x) <= hoop_tolerance and abs(ball_y - hoop_y) <= hoop_tolerance:
         print("Score!!!")
         scored = True
         break
 
     # update ball pos
-    ball_x = ball_x + x_chg
-    ball_y = ball_y + y_chg
+    ball_x = ball_x + x_chg * time_step
+    ball_y = ball_y + y_chg * time_step 
 
     # gravity pulls ball down
-    y_chg = y_chg - gravity
+    y_chg = y_chg - gravity * time_step
     if ball_y < 0:
         break
 
@@ -142,7 +158,14 @@ draw_hoop(ax)
 
 # create moving ball and trail
 ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
-trail_plot, = ax.plot([], [], color='purple', linewidth=2, label="Ball trajectory")
+trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
+
+if scored == True:
+    ax.text(0.72, 0.90, "SCORE!", transform=ax.transAxes, fontsize=14)
+else:
+    ax.text(0.75, 0.90, "MISS!", transform=ax.transAxes, fontsize=14)
+
+ax.text(0.02, 0.95, "Power-up: " + power_up, transform=ax.transAxes, fontsize=10)
 
 ax.legend()
 
