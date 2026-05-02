@@ -90,7 +90,7 @@ while play_again == "yes":
     if current_power_up == "accuracy":
         hoop_tolerance = 2.5
 
-    for step in range(30):  # one step = one position update
+    for step in range(15):  # one step = one position update
         trajectory.append((ball_x, ball_y))
 
         # debug + visuals later? looks MESSY
