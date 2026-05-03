@@ -115,6 +115,7 @@ while play_again == "yes":
 
     if current_power_up == "accuracy":
         hoop_tolerance = 2.5
+    
 
     for step in range(15):  # one step = one position update
         trajectory.append((ball_x, ball_y))
@@ -226,9 +227,9 @@ while play_again == "yes":
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
             if scored:
                 if used_accuracy_help:
-                    adlib_text.set_text("ACCURACY BOOST!")
+                    adlib_text.set_text("SCORE! Sweet accuracy!")
                 elif current_power_up == "curve":
-                    adlib_text.set_text("CURVE SHOT!")
+                    adlib_text.set_text("SCORE! Eagled it in!")
                 else:
                     adlib_text.set_text("SWISH!")
             else:
@@ -250,11 +251,20 @@ while play_again == "yes":
     plt.show()
 
     if scored:
-        print("You made the shot! Choose a power-up for your NEXT shot: none, accuracy, or curve")
-        available_power_up = input("Next power-up: ").lower()
+        print("You made the shot!")
+        print("Choose a power-up for your NEXT shot: none, accuracy, or curve")
+        print("Type 'quit' to exit the game")
 
-        if available_power_up not in ["none", "accuracy", "curve"]:
-            available_power_up = "none"
+        while True:
+            available_power_up = input("Next power-up: ").lower()
+
+            if available_power_up in ["none", "accuracy", "curve"]:
+                break
+            elif available_power_up == "quit":
+                print("Thanks for playing Hoop House!")
+                exit()
+            else:
+                print("Invalid power-up. Please type: none, accuracy, curve, or quit")
     else:
         available_power_up = "none"
 
