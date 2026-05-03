@@ -34,10 +34,15 @@ while play_again == "yes":
 
 
     print("Set up your shot!")
+    print("------------------------------")
+    print("ANGLE RANGE: 15 to 75")
     print("Type 'a' to increase your angle")
     print("Type 'd' to decrease your angle")
+    print("------------------------------")
+    print("POWER RANGE: 1 to 15")
     print("Type 'p' to strengthen your power")
     print("Type 'w' to weaken your power")
+    print("------------------------------")
     print("Type 'shoot' when ready")
     print("Type 'quit' to exit the game")
     print("Power-up for this shot:", current_power_up)
@@ -49,164 +54,171 @@ while play_again == "yes":
         move = input("Enter choice: ")
 
         if move == "a":
-            angle = angle + 5     # = assigns new value, == checks equality
+            if angle < 75:
+                angle = angle + 5
+            else:
+                print("Angle is already at the maximum.")
+
         elif move == "d":
-            angle = angle - 5
+            if angle > 15:
+                angle = angle - 5
+            else:
+                print("Angle is already at the minimum.")
+
         elif move == "p":
-            power = power + 1
+            if power < 15:
+                power = power + 1
+            else:
+                print("Power is already at the maximum.")
+
         elif move == "w":
-            if power > 1:   # prevent negative power
+            if power > 1:
                 power = power - 1
-        elif move == "shoot":
-            break
-        elif move == "quit":
-            print("Thanks for playing Hoop House!")
-            exit()
-        else:
-            print("Invalid choice, please type only the letter or phrase intended")
+            else:
+                print("Power is already at the minimum.")
             
 
-    if current_power_up == "curve":
-        target_angle = 50
+        if current_power_up == "curve":
+            target_angle = 50
 
-        if angle < target_angle:
-            angle = angle + 5
-        elif angle > target_angle:
-            angle = angle - 5
+            if angle < target_angle:
+                angle = angle + 5
+            elif angle > target_angle:
+                angle = angle - 5
 
-    angle_rad = math.radians(angle)
+        angle_rad = math.radians(angle)
 
-    # convert angle + power to movement
-    x_chg = power * math.cos(angle_rad)
-    y_chg = power * math.sin(angle_rad)
+        # convert angle + power to movement
+        x_chg = power * math.cos(angle_rad)
+        y_chg = power * math.sin(angle_rad)
 
-    gravity = 0.5 
-    time_step = 0.5
+        gravity = 0.5 
+        time_step = 0.5
 
-    trajectory = []
-    scored = False
+        trajectory = []
+        scored = False
 
-    hoop_tolerance = 1.5
-    if current_power_up == "accuracy":
-        hoop_tolerance = 2.5
+        hoop_tolerance = 1.5
+        if current_power_up == "accuracy":
+            hoop_tolerance = 2.5
 
-    for step in range(15):  # one step = one position update
-        trajectory.append((ball_x, ball_y))
+        for step in range(15):  # one step = one position update
+            trajectory.append((ball_x, ball_y))
 
-        # debug + visuals later? looks MESSY
-        print("Step:", step)
-        print("Ball position:", ball_x, ball_y)
-        print("Current changes:", x_chg, y_chg)
+            # debug + visuals later? looks MESSY
+            print("Step:", step)
+            print("Ball position:", ball_x, ball_y)
+            print("Current changes:", x_chg, y_chg)
 
-        if abs(ball_x - hoop_x) <= hoop_tolerance and abs(ball_y - hoop_y) <= hoop_tolerance:
-            print("Score!!!")
-            scored = True
-            break
+            if abs(ball_x - hoop_x) <= hoop_tolerance and abs(ball_y - hoop_y) <= hoop_tolerance:
+                print("Score!!!")
+                scored = True
+                break
 
-        # update ball pos
-        ball_x = ball_x + x_chg * time_step
-        ball_y = ball_y + y_chg * time_step 
+            # update ball pos
+            ball_x = ball_x + x_chg * time_step
+            ball_y = ball_y + y_chg * time_step 
 
-        # gravity pulls ball down
-        y_chg = y_chg - gravity * time_step
-        if ball_y < 0:
-            break
-
-
-    if scored == False:
-        print("Miss!")
-
-    print(trajectory)
+            # gravity pulls ball down
+            y_chg = y_chg - gravity * time_step
+            if ball_y < 0:
+                break
 
 
-    # Visualizing shot
-    x_vals = []
-    y_vals = []
+        if scored == False:
+            print("Miss!")
 
-    for point in trajectory:
-        x_vals.append(point[0])
-        y_vals.append(point[1])
+        print(trajectory)
 
 
-    # helper function to draw hoop
-    def draw_hoop(ax):
-        # bigger backboard
-        ax.plot([hoop_x + 1.5, hoop_x + 1.5], [hoop_y - 2, hoop_y + 2], linewidth=4)
+        # Visualizing shot
+        x_vals = []
+        y_vals = []
 
-        # bigger rim
-        ax.plot([hoop_x - 1.5, hoop_x + 1.5], [hoop_y, hoop_y], linewidth=4)
-
-        # bigger net
-        ax.plot([hoop_x - 1.5, hoop_x - 1.0], [hoop_y, hoop_y - 1.5], linewidth=1.5)
-        ax.plot([hoop_x - 0.75, hoop_x - 0.3], [hoop_y, hoop_y - 1.5], linewidth=1.5)
-        ax.plot([hoop_x, hoop_x], [hoop_y, hoop_y - 1.5], linewidth=1.5)
-        ax.plot([hoop_x + 0.75, hoop_x + 0.3], [hoop_y, hoop_y - 1.5], linewidth=1.5)
-        ax.plot([hoop_x + 1.5, hoop_x + 1.0], [hoop_y, hoop_y - 1.5], linewidth=1.5)
-        ax.plot([hoop_x - 1.0, hoop_x + 1.0], [hoop_y - 1.5, hoop_y - 1.5], linewidth=1.5)
+        for point in trajectory:
+            x_vals.append(point[0])
+            y_vals.append(point[1])
 
 
-    # FIRST: animation figure
-    fig, ax = plt.subplots()
+        # helper function to draw hoop
+        def draw_hoop(ax):
+            # bigger backboard
+            ax.plot([hoop_x + 1.5, hoop_x + 1.5], [hoop_y - 2, hoop_y + 2], linewidth=4)
 
-    ax.set_title("Basketball Shot Animation")
-    ax.set_xlabel("x-position")
-    ax.set_ylabel("y-position")
+            # bigger rim
+            ax.plot([hoop_x - 1.5, hoop_x + 1.5], [hoop_y, hoop_y], linewidth=4)
 
-    ax.axhline(y=0)
+            # bigger net
+            ax.plot([hoop_x - 1.5, hoop_x - 1.0], [hoop_y, hoop_y - 1.5], linewidth=1.5)
+            ax.plot([hoop_x - 0.75, hoop_x - 0.3], [hoop_y, hoop_y - 1.5], linewidth=1.5)
+            ax.plot([hoop_x, hoop_x], [hoop_y, hoop_y - 1.5], linewidth=1.5)
+            ax.plot([hoop_x + 0.75, hoop_x + 0.3], [hoop_y, hoop_y - 1.5], linewidth=1.5)
+            ax.plot([hoop_x + 1.5, hoop_x + 1.0], [hoop_y, hoop_y - 1.5], linewidth=1.5)
+            ax.plot([hoop_x - 1.0, hoop_x + 1.0], [hoop_y - 1.5, hoop_y - 1.5], linewidth=1.5)
 
-    ax.set_xlim(-1, max(x_vals) + 5)
-    ax.set_ylim(-1, max(max(y_vals), hoop_y) + 5)
 
-    # draw start point
-    ax.plot(x_vals[0], y_vals[0], marker='o', color='pink', label="Start")
+        # FIRST: animation figure
+        fig, ax = plt.subplots()
 
-    # draw hoop
-    draw_hoop(ax)
+        ax.set_title("Basketball Shot Animation")
+        ax.set_xlabel("x-position")
+        ax.set_ylabel("y-position")
 
-    # create moving ball and trail
-    ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
-    trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
+        ax.axhline(y=0)
 
-    adlib_text = ax.text(0.72, 0.90, "", transform=ax.transAxes, fontsize=14)
-    ax.text(0.02, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
+        ax.set_xlim(-1, 35)
+        ax.set_ylim(-1, 15)
 
-    ax.legend()
+        # draw start point
+        ax.plot(x_vals[0], y_vals[0], marker='o', color='pink', label="Start")
 
-    # update function for animation
-    def update(frame):
-        ball_plot.set_data([x_vals[frame]], [y_vals[frame]])
-        trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1])
+        # draw hoop
+        draw_hoop(ax)
 
-        # only show adlib once ball reaches/passes hoop,
-        # or at the very end if it never gets there
-        if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
-            if scored:
-                adlib_text.set_text("SWISH!")
+        # create moving ball and trail
+        ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
+        trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
+
+        adlib_text = ax.text(0.72, 0.90, "", transform=ax.transAxes, fontsize=14)
+        ax.text(0.02, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
+
+        ax.legend()
+
+        # update function for animation
+        def update(frame):
+            ball_plot.set_data([x_vals[frame]], [y_vals[frame]])
+            trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1])
+
+            # only show adlib once ball reaches/passes hoop,
+            # or at the very end if it never gets there
+            if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
+                if scored:
+                    adlib_text.set_text("SWISH!")
+                else:
+                    adlib_text.set_text("MISS!")
             else:
-                adlib_text.set_text("MISS!")
+                adlib_text.set_text("")
+
+            return ball_plot, trail_plot, adlib_text
+
+        ani = animation.FuncAnimation(
+            fig,
+            update,
+            frames=len(x_vals),
+            interval=800,
+            repeat=False,
+            blit=False
+        )
+
+        plt.show()
+
+        if scored:
+            print("You made the shot! Choose a power-up for your NEXT shot: none, accuracy, or curve")
+            available_power_up = input("Next power-up: ").lower()
+
+            if available_power_up not in ["none", "accuracy", "curve"]:
+                available_power_up = "none"
         else:
-            adlib_text.set_text("")
-
-        return ball_plot, trail_plot, adlib_text
-
-    ani = animation.FuncAnimation(
-        fig,
-        update,
-        frames=len(x_vals),
-        interval=800,
-        repeat=False,
-        blit=False
-    )
-
-    plt.show()
-
-    if scored:
-        print("You made the shot! Choose a power-up for your NEXT shot: none, accuracy, or curve")
-        available_power_up = input("Next power-up: ").lower()
-
-        if available_power_up not in ["none", "accuracy", "curve"]:
             available_power_up = "none"
-    else:
-        available_power_up = "none"
 
-    play_again = input("Play again? yes or no: ").lower()
+        play_again = input("Play again? yes or no: ").lower()
