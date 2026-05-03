@@ -227,10 +227,7 @@ while play_again == "yes":
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
             if scored:
                 if current_power_up == "accuracy":
-                    if used_accuracy_help:
-                        adlib_text.set_text("SCORE! Sweet accuracy!")
-                    else:
-                        adlib_text.set_text("SWISH! Accuracy was ready!")
+                    adlib_text.set_text("SCORE! Sweet accuracy!")
                 elif current_power_up == "curve":
                     adlib_text.set_text("SCORE! Eagled it in!")
                 else:
