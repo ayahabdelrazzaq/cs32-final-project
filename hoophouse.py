@@ -120,11 +120,6 @@ while play_again == "yes":
     for step in range(15):  # one step = one position update
         trajectory.append((ball_x, ball_y))
 
-        # debug + visuals later? looks MESSY
-        print("Step:", step)
-        print("Ball position:", ball_x, ball_y)
-        print("Current changes:", x_chg, y_chg)
-
         if abs(ball_x - hoop_x) <= hoop_tolerance and abs(ball_y - hoop_y) <= hoop_tolerance:
             print("Score!!!")
             scored = True
