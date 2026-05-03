@@ -46,6 +46,7 @@ while play_again == "yes":
     print("Type 'shoot' when ready")
     print("Type 'quit' to exit the game")
     print("Power-up for this shot:", current_power_up)
+    print("------------------------------")
 
     while True:
         print("Calculated angle:", angle)
