@@ -12,6 +12,7 @@ import math
 # graphic/plotting, from chatGPT
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.patches as patches
 
 print("Welcome to Hoop House!")
 
@@ -108,7 +109,10 @@ while play_again == "yes":
     trajectory = []
     scored = False
 
-    hoop_tolerance = 1.5
+    normal_tolerance = 1.5
+    hoop_tolerance = normal_tolerance
+    used_accuracy_help = False
+
     if current_power_up == "accuracy":
         hoop_tolerance = 2.5
 
@@ -123,6 +127,11 @@ while play_again == "yes":
         if abs(ball_x - hoop_x) <= hoop_tolerance and abs(ball_y - hoop_y) <= hoop_tolerance:
             print("Score!!!")
             scored = True
+
+            if current_power_up == "accuracy":
+                if abs(ball_x - hoop_x) > normal_tolerance or abs(ball_y - hoop_y) > normal_tolerance:
+                    used_accuracy_help = True
+
             break
 
         # update ball pos
@@ -185,6 +194,19 @@ while play_again == "yes":
     # draw hoop
     draw_hoop(ax)
 
+    if current_power_up == "accuracy":
+        accuracy_box = patches.Rectangle(
+            (hoop_x - hoop_tolerance, hoop_y - hoop_tolerance),
+            2 * hoop_tolerance,
+            2 * hoop_tolerance,
+            linewidth=2,
+            edgecolor='green',
+            facecolor='green',
+            linestyle='--',
+            alpha=0.15
+        )
+        ax.add_patch(accuracy_box)
+
     # create moving ball and trail
     ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
     trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
@@ -203,7 +225,12 @@ while play_again == "yes":
         # or at the very end if it never gets there
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
             if scored:
-                adlib_text.set_text("SWISH!")
+                if used_accuracy_help:
+                    adlib_text.set_text("ACCURACY BOOST!")
+                elif current_power_up == "curve":
+                    adlib_text.set_text("CURVE SHOT!")
+                else:
+                    adlib_text.set_text("SWISH!")
             else:
                 adlib_text.set_text("MISS!")
         else:
@@ -232,3 +259,5 @@ while play_again == "yes":
         available_power_up = "none"
 
     play_again = input("Play again? yes or no: ").lower()
+    if play_again != "yes":
+        print("Thanks for playing Hoop House!")
