@@ -227,6 +227,10 @@ while play_again == "yes":
                     adlib_text.set_text("SCORE! Eagled it in!")
                 else:
                     adlib_text.set_text("SWISH!")
+            else:
+                adlib_text.set_text("MISS!")
+        else:
+            adlib_text.set_text("")
 
         return ball_plot, trail_plot, adlib_text
 
