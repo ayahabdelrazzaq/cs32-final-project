@@ -226,16 +226,15 @@ while play_again == "yes":
         # or at the very end if it never gets there
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
             if scored:
-                if used_accuracy_help:
-                    adlib_text.set_text("SCORE! Sweet accuracy!")
+                if current_power_up == "accuracy":
+                    if used_accuracy_help:
+                        adlib_text.set_text("SCORE! Sweet accuracy!")
+                    else:
+                        adlib_text.set_text("SWISH! Accuracy was ready!")
                 elif current_power_up == "curve":
                     adlib_text.set_text("SCORE! Eagled it in!")
                 else:
                     adlib_text.set_text("SWISH!")
-            else:
-                adlib_text.set_text("MISS!")
-        else:
-            adlib_text.set_text("")
 
         return ball_plot, trail_plot, adlib_text
 
