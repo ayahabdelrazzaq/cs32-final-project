@@ -87,7 +87,7 @@ while play_again == "yes":
             exit()
         
         else:
-            print("Invalid choice")
+            print("Invalid command. Please type: a, d, p, w, shoot, or quit")
 
     if current_power_up == "curve":
         target_angle = 50
