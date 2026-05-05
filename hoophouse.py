@@ -45,7 +45,7 @@ while play_again == "yes":
     print("------------------------------")
     print("POWER RANGE: 1 to 15")
     print("Type 'p' to strengthen your power")
-    print("Type 'w' to weaken your power")
+    print("Type 'w' to weaken your power"),
     print("------------------------------")
     print("Type 'shoot' when ready")
     print("Type 'quit' to exit the game")
@@ -93,7 +93,7 @@ while play_again == "yes":
         else:
             print("Invalid command. Please type: a, d, p, w, shoot, or quit")
 
-    # Curve power-up
+    # Curve power-up    ##
     if current_power_up == "curve":
         target_angle = 50
 
@@ -126,13 +126,7 @@ while play_again == "yes":
         if abs(ball_x - hoop_x) <= hoop_tolerance and abs(ball_y - hoop_y) <= hoop_tolerance:
             print("Score!!!")
             scored = True
-
-            if current_power_up == "accuracy":
-                if abs(ball_x - hoop_x) > normal_tolerance or abs(ball_y - hoop_y) > normal_tolerance:
-                    used_accuracy_help = True
-
             break
-
         # update ball pos
         ball_x = ball_x + x_chg * time_step
         ball_y = ball_y + y_chg * time_step 
@@ -140,7 +134,7 @@ while play_again == "yes":
         # gravity pulls ball down
         y_chg = y_chg - gravity * time_step
         if ball_y < 0:
-            break
+            break   ##
 
 
     if scored == False:
@@ -189,10 +183,10 @@ while play_again == "yes":
     # draw hoop
     draw_hoop(ax)
 
-    if current_power_up == "accuracy":
+    if current_power_up == "accuracy":  ##
         accuracy_box = patches.Rectangle(
-            (hoop_x - hoop_tolerance, hoop_y - hoop_tolerance),
-            2 * hoop_tolerance,
+            (hoop_x - hoop_tolerance, hoop_y - hoop_tolerance), #separates arguments
+            2 * hoop_tolerance,     # width, extends from hoop center in both directions
             2 * hoop_tolerance,
             linewidth=2,
             edgecolor='green',
@@ -206,21 +200,21 @@ while play_again == "yes":
     ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
     trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
 
-    adlib_text = ax.text(0.72, 0.90, "", transform=ax.transAxes, fontsize=14)
-    ax.text(0.02, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
+    adlib_text = ax.text(0.70, 0.90, "", transform=ax.transAxes, fontsize=14)
+    ax.text(0.05, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
 
     ax.legend()
 
     # update function for animation
     def update(frame):
         ball_plot.set_data([x_vals[frame]], [y_vals[frame]])    # set_data updates where it is
-        trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1]) # set_text updates text
+        trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1]) 
 
         # only show adlib once ball reaches/passes hoop, or at end if no score
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
             if scored:
                 if current_power_up == "accuracy":
-                    adlib_text.set_text("SCORE! Sweet accuracy!")
+                    adlib_text.set_text("SCORE! Sweet accuracy!")   # set_text updates text
                 elif current_power_up == "curve":
                     adlib_text.set_text("SCORE! Eagled it in!")
                 else:
@@ -230,7 +224,7 @@ while play_again == "yes":
         else:
             adlib_text.set_text("")
 
-        return ball_plot, trail_plot, adlib_text
+        return ball_plot, trail_plot, adlib_text    ##
 
     # create animation
     ani = animation.FuncAnimation(
