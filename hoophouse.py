@@ -1,11 +1,14 @@
 '''Algorithmic logic steps:
-1. Set the starting position of the ball
-2. Set the position of the hoop.
-3. Take in the shot angle and power
-4. Convert those values into movement of the ball
-5. update the balls position overtime (loop)
-6. check if enters hoop area
-7. output whether score or miss'''
+1. Start the game and set default values for the ball, hoop, angle, power, and power-up
+2. Let the player adjust angle and power or quit before taking the shot
+3. Apply any active power-up effects to the shot setup
+4. Convert the final angle and power into x and y movement
+5. Simulate the shot over time, storing the ball's trajectory
+6. Check whether the ball enters the hoop area and determine score or miss
+7. Animate the shot and display visuals, including the hoop, trajectory, and "adlib text"
+8. If the player scores, let them choose a power-up for the next shot
+9. Ask whether the player wants to play again or exit the game
+'''
 
 import math
 
@@ -13,6 +16,7 @@ import math
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patches as patches
+#
 
 print("Welcome to Hoop House!")
 
@@ -35,7 +39,7 @@ while play_again == "yes":
 
 
     print("Set up your shot!")
-    print("------------------------------")
+    print("------------------------------") #separation
     print("ANGLE RANGE: 15 to 75")
     print("Type 'a' to increase your angle")
     print("Type 'd' to decrease your angle")
@@ -49,6 +53,7 @@ while play_again == "yes":
     print("Power-up for this shot:", current_power_up)
     print("------------------------------")
 
+    # Setting up the shot
     while True:
         print("Calculated angle:", angle)
         print("Power accumulated:", power)
@@ -89,6 +94,7 @@ while play_again == "yes":
         else:
             print("Invalid command. Please type: a, d, p, w, shoot, or quit")
 
+    # Curve power-up
     if current_power_up == "curve":
         target_angle = 50
 
@@ -99,7 +105,7 @@ while play_again == "yes":
 
     angle_rad = math.radians(angle)
 
-    # convert angle + power to movement
+    # convert angle and power to movement
     x_chg = power * math.cos(angle_rad)
     y_chg = power * math.sin(angle_rad)
 
@@ -111,8 +117,9 @@ while play_again == "yes":
 
     normal_tolerance = 1.5
     hoop_tolerance = normal_tolerance
-    used_accuracy_help = False
+    used_accuracy_help = False 
 
+    # Accuracy power-up
     if current_power_up == "accuracy":
         hoop_tolerance = 2.5
     
@@ -146,16 +153,15 @@ while play_again == "yes":
     print(trajectory)
 
 
-    # Visualizing shot
+    # Visualizing shot, from chatGPT
     x_vals = []
     y_vals = []
-
+    
     for point in trajectory:
         x_vals.append(point[0])
         y_vals.append(point[1])
 
-
-    # helper function to draw hoop
+    # helper function to draw hoop, from chatGPT
     def draw_hoop(ax):
         # bigger backboard
         ax.plot([hoop_x + 1.5, hoop_x + 1.5], [hoop_y - 2, hoop_y + 2], linewidth=4)
@@ -172,7 +178,7 @@ while play_again == "yes":
         ax.plot([hoop_x - 1.0, hoop_x + 1.0], [hoop_y - 1.5, hoop_y - 1.5], linewidth=1.5)
 
 
-    # FIRST: animation figure
+    # animation figure, from chatGPT
     fig, ax = plt.subplots()
 
     ax.set_title("Basketball Shot Animation")
@@ -203,7 +209,7 @@ while play_again == "yes":
         )
         ax.add_patch(accuracy_box)
 
-    # create moving ball and trail
+    # create moving ball and trail, from chatGPT
     ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
     trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
 
@@ -211,14 +217,14 @@ while play_again == "yes":
     ax.text(0.02, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
 
     ax.legend()
+    #
 
     # update function for animation
     def update(frame):
         ball_plot.set_data([x_vals[frame]], [y_vals[frame]])
         trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1])
 
-        # only show adlib once ball reaches/passes hoop,
-        # or at the very end if it never gets there
+        # only show adlib once ball reaches/passes hoop, or at end if no score
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
             if scored:
                 if current_power_up == "accuracy":
@@ -234,6 +240,7 @@ while play_again == "yes":
 
         return ball_plot, trail_plot, adlib_text
 
+    # create animation, from chatGPT 
     ani = animation.FuncAnimation(
         fig,
         update,
@@ -244,7 +251,8 @@ while play_again == "yes":
     )
 
     plt.show()
-
+    #
+    
     if scored:
         print("You made the shot!")
         print("Choose a power-up for your NEXT shot: none, accuracy, or curve")

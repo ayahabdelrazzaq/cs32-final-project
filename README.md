@@ -3,24 +3,46 @@ My CS32 Final Project
 
 # Project description
 
-This project is a basketball shooting game inspired by the dramatic style of sports in animes (e.g. Kuroko's Basketball). The player (the user) sets up a shot by choosing the ball's angle and power, and the program simulates the movement of the ball through the air. Based on the ball's trajectory, the code determines whether the shot goes in the hoop or misses.
+This project is a basketball shooting game inspired by the dramatic style of sports in animes (e.g. Kuroko's Basketball). The player (the user) sets up a shot by choosing the ball's angle and power, and the program tracks the movement of the ball through the air. Based on the ball's trajectory, the code determines whether the shot goes in the hoop or misses.
 
-Right now, the project focuses on simulating one basketball shot to make the program more manageable. The current version allows the user to adjust shot settings, lanuches the ball using projectile motion logic, tracks the ball's position over time, and checks whether the ball enters the hoop area.
+The current version of the project allows the user to play multiple rounds, adjust angle and power within set ranges (so they have a better idea of the values they should use), and watch the shot through an animated visual created with `matplotlib`. The game also includes power-ups that can be earned after making a shot and then used on the next round. These currently include:
+- **accuracy**, which increases the effective hoop area
+- **curve**, which adjusts the shot angle to help guide the ball
 
-In later versions, I hope to expand the game with more features such as scoring systems, multiple shots, visuals, and power-ups (accuracy boost, 2nd chance, curve ball).
+The program also includes simple game feedback, such as score (swish) or miss messages, "adlib text" during the animation, and a replay option so the user can continue playing.
 
 # How to run the program
 1. Run the program with: python3 bballshot.py
 2. When the program starts, it will ask the user to se up a shot and instructs how:
+
+Angle control:
 "Type 'a' to increase your angle"
 "Type 'd' to decrease your angle"
+
+Power control:
 "Type 'p' to strengthen your power"
 "Type 'w' to weaken your power"
+
+Other commands:
 "Type 'shoot' when ready"
-3. The program will then simulate the shot and print whether the result is a "Score!" or "Miss!" It will also print the trajectory of the ball as a list of coordinates (to be replaced by visuals)
+"Type 'quit' to exit the game"
+
+3. The program then simulates the shot, animates the ball’s trajectory, and displays whether the shot was made or missed.
+
+If the player makes the shot, they are prompted to choose a power-up for the next round:
+- None
+- Accuracy
+- Curve
+
+At the end of each round, the player can choose whether to play again, and they can exit at any point.
 
 # Special setup
-This project uses Python's built-in math module for trig calculations. No extra package installation is required.
+- Python’s built-in math module for trigonometric calculations
+- matplotlib for animation and game visuals
+- matplotlib.patches for extra visual elements, such as the accuracy zone
+
+If matplotlib is not already installed, use:
+    python -m pip install matplotlib
 
 # References
 Used in learning about the math module:
