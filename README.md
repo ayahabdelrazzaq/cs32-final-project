@@ -46,26 +46,39 @@ If matplotlib is not already installed, use:
 
 # External Contributors
 
-## Online tutorials
+# Online tutorials
 
 Used in learning/refreshing about list operations and related basics:
+
 https://docs.python.org/3/tutorial/datastructures.html 
 
 This helped me ensure I was using the operations properly.
 
 Used in learning matplotlib:
+
 https://matplotlib.org/stable/users/explain/quick_start.html#quick-start
+
 https://matplotlib.org/stable/api/index.html
+
 https://matplotlib.org/stable/users/explain/animations/animations.html#animations
+
 https://matplotlib.org/stable/users/explain/colors/colors.html
+
 https://matplotlib.org/stable/users/explain/text/index.html
+
 https://matplotlib.org/stable/users/explain/artists/transforms_tutorial.html
+
 https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html
+
 https://matplotlib.org/stable/api/patches_api.html
 
+
 Used in learning about the math module and trig functions for projectile motion:
+
 https://youtu.be/AHNdVt58eQE?si=3e7e14GN2A9V5Fd3
+
 https://youtu.be/uXBf9yYG-TA?si=QhPJdR0c35f20TbG
+
 https://youtu.be/ZxJs4M0qPqA?si=Y7qOuNNxh2cjwDyZ
 
 These helped me better understand how to use trigonometric functions and angle conversion in Python, despite still using chatGPT for help (see below).
@@ -77,16 +90,20 @@ I used ChatGPT as a support tool while working on my project. It helped me under
 Here are the code pieces it assisted me with:
 
 
+```
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patches as patches
+```
 
 I used matplotlib.pyplot to create and display the figure, matplotlib.animation to animate the ball’s movement over time, and matplotlib.patches to draw extra visuals within the graph/animation(accuracy rectangle). ChatGPT helped me identify which matplotlib modules to import and exactly how to use them.
 
 
+```
 angle_rad = math.radians(angle)
 x_chg = power * math.cos(angle_rad)
 y_chg = power * math.sin(angle_rad)
+```
 
 This code takes the user’s chosen angle and power and turns them into horizontal and vertical movement for the ball.
 - math.radians(angle) converts the angle from degrees to radians, because Python’s trig functions use radians.
@@ -95,6 +112,7 @@ This code takes the user’s chosen angle and power and turns them into horizont
 Multiplied by power so the ball moves faster or slower depending on how much power the user selected.
 
 
+```
 def draw_hoop(ax):
     ax.plot([hoop_x + 1.5, hoop_x + 1.5], [hoop_y - 2, hoop_y + 2], linewidth=4)
 
@@ -106,6 +124,7 @@ def draw_hoop(ax):
     ax.plot([hoop_x + 0.75, hoop_x + 0.3], [hoop_y, hoop_y - 1.5], linewidth=1.5)
     ax.plot([hoop_x + 1.5, hoop_x + 1.0], [hoop_y, hoop_y - 1.5], linewidth=1.5)
     ax.plot([hoop_x - 1.0, hoop_x + 1.0], [hoop_y - 1.5, hoop_y - 1.5], linewidth=1.5) 
+```
 
 This function draws the hoop on the graph. I used a helper function here so I could keep the hoop-drawing code in one place and call it whenever I needed to draw the hoop on the figure.
 
@@ -113,6 +132,7 @@ The first ax.plot line draws the backboard as a vertical line, the second ax.plo
 ax.plot() tells matplotlib to draw a line on the graph. Within the first brackets, we have the x-coordinates of the 2 endpoints. When we look specifically at the backboard line, for example, because both x values are the same, the line doesn't move horizontally, so it just produces a vertical line. Within the second brackets, we have the y-coordinates of the 2 endpoints. Looking at the backboard line again, subtracting and adding 2 from hoop_y (the hoop center) means the vertical line starts 2 units below and ends 2 units above the hoop center (height of the backboard). Linewidth just makes the lines easier to see for the user. This same logic is used for the rim and net. AI here was useful for getting the correct values when plotting each of these lines.
 
 
+```
 ani = animation.FuncAnimation(
     fig,
     update,
@@ -120,9 +140,11 @@ ani = animation.FuncAnimation(
     interval=800,
     repeat=False,
     blit=False
+
 )
 
 plt.show()
+```
 
 This block turns the graph into a live animation for the user. Despite briefly reading about matplotlib animation tools, it was still intimidating to approach by itself, chatGPT made it a lot easier than just reading the documentation. 
 animation.FuncAnimation() repeadetly calls my update function. fig is just the graph being animated. update is the function that moves the ball, extends the trail, and updates the "adlib text" each frame, frames=len(x_vals) means the animation runs once for each point (x value) in the trajectory. interval=800 sets the delay between the frames in ms, controlling the speed of the animation. repeat=False means the animation plays just once. blit=False tells matplotlib to redraw the figure each frame, which is simpler and worked better for my project. plt.show() displays the figure to the user.
