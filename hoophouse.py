@@ -103,11 +103,12 @@ while play_again == "yes":
         elif angle > target_angle:
             angle = angle - 5
 
+    # converting angle and power to movement, from chatGPT
     angle_rad = math.radians(angle)
 
-    # convert angle and power to movement
     x_chg = power * math.cos(angle_rad)
     y_chg = power * math.sin(angle_rad)
+    #
 
     gravity = 0.5 
     time_step = 0.5
@@ -148,7 +149,6 @@ while play_again == "yes":
         print("Miss!")
 
 
-    # Visualizing shot, from chatGPT
     x_vals = []
     y_vals = []
     
@@ -216,8 +216,8 @@ while play_again == "yes":
 
     # update function for animation
     def update(frame):
-        ball_plot.set_data([x_vals[frame]], [y_vals[frame]])
-        trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1])
+        ball_plot.set_data([x_vals[frame]], [y_vals[frame]])    # set_data updates where it is
+        trail_plot.set_data(x_vals[:frame + 1], y_vals[:frame + 1]) # set_text updates text
 
         # only show adlib once ball reaches/passes hoop, or at end if no score
         if x_vals[frame] >= hoop_x or frame == len(x_vals) - 1:
