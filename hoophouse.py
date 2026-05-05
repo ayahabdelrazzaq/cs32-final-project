@@ -112,9 +112,6 @@ while play_again == "yes":
     gravity = 0.5 
     time_step = 0.5
 
-    trajectory = []
-    scored = False
-
     normal_tolerance = 1.5
     hoop_tolerance = normal_tolerance
     used_accuracy_help = False 
@@ -149,8 +146,6 @@ while play_again == "yes":
 
     if scored == False:
         print("Miss!")
-
-    print(trajectory)
 
 
     # Visualizing shot, from chatGPT
@@ -252,7 +247,7 @@ while play_again == "yes":
 
     plt.show()
     #
-    
+
     if scored:
         print("You made the shot!")
         print("Choose a power-up for your NEXT shot: none, accuracy, or curve")
