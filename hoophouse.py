@@ -12,11 +12,10 @@
 
 import math
 
-# graphic/plotting, from chatGPT
+# graphic/plotting
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import matplotlib.patches as patches
-#
 
 print("Welcome to Hoop House!")
 
@@ -103,12 +102,11 @@ while play_again == "yes":
         elif angle > target_angle:
             angle = angle - 5
 
-    # converting angle and power to movement, from chatGPT
+    # converting angle and power to movement
     angle_rad = math.radians(angle)
 
     x_chg = power * math.cos(angle_rad)
     y_chg = power * math.sin(angle_rad)
-    #
 
     gravity = 0.5 
     time_step = 0.5
@@ -156,7 +154,7 @@ while play_again == "yes":
         x_vals.append(point[0])
         y_vals.append(point[1])
 
-    # helper function to draw hoop, from chatGPT
+    # helper function to draw hoop
     def draw_hoop(ax):
         # bigger backboard
         ax.plot([hoop_x + 1.5, hoop_x + 1.5], [hoop_y - 2, hoop_y + 2], linewidth=4)
@@ -173,7 +171,7 @@ while play_again == "yes":
         ax.plot([hoop_x - 1.0, hoop_x + 1.0], [hoop_y - 1.5, hoop_y - 1.5], linewidth=1.5)
 
 
-    # animation figure, from chatGPT
+    # animation figure
     fig, ax = plt.subplots()
 
     ax.set_title("Basketball Shot Animation")
@@ -204,7 +202,7 @@ while play_again == "yes":
         )
         ax.add_patch(accuracy_box)
 
-    # create moving ball and trail, from chatGPT
+    # create moving ball and trail
     ball_plot, = ax.plot([], [], marker='o', color='orange', markersize=12, label="Ball")
     trail_plot, = ax.plot([], [], color='purple', linewidth=2, linestyle='--', label="Ball trajectory")
 
@@ -212,7 +210,6 @@ while play_again == "yes":
     ax.text(0.02, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
 
     ax.legend()
-    #
 
     # update function for animation
     def update(frame):
@@ -235,7 +232,7 @@ while play_again == "yes":
 
         return ball_plot, trail_plot, adlib_text
 
-    # create animation, from chatGPT 
+    # create animation
     ani = animation.FuncAnimation(
         fig,
         update,
@@ -246,7 +243,6 @@ while play_again == "yes":
     )
 
     plt.show()
-    #
 
     if scored:
         print("You made the shot!")
