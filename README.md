@@ -77,6 +77,13 @@ I used ChatGPT as a support tool while working on my project. It helped me under
 Here are the code pieces it assisted me with:
 
 
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import matplotlib.patches as patches
+
+I used matplotlib.pyplot to create and display the figure, matplotlib.animation to animate the ball’s movement over time, and matplotlib.patches to draw extra visuals within the graph/animation(accuracy rectangle). ChatGPT helped me identify which matplotlib modules to import and exactly how to use them.
+
+
 angle_rad = math.radians(angle)
 x_chg = power * math.cos(angle_rad)
 y_chg = power * math.sin(angle_rad)
