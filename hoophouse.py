@@ -113,8 +113,6 @@ while play_again == "yes":
 
     normal_tolerance = 1.5
     hoop_tolerance = normal_tolerance
-    used_accuracy_help = False 
-
     # Accuracy power-up
     if current_power_up == "accuracy":
         hoop_tolerance = 2.5
@@ -203,7 +201,7 @@ while play_again == "yes":
     adlib_text = ax.text(0.70, 0.90, "", transform=ax.transAxes, fontsize=14)
     ax.text(0.05, 0.95, "Power-up: " + current_power_up, transform=ax.transAxes, fontsize=10)
 
-    ax.legend()
+    ax.legend() 
 
     # update function for animation
     def update(frame):
